@@ -6,7 +6,7 @@ import (
 
 	"github.com/SHIVAM-GOUR/gbt-school-be/internal/models"
 	"github.com/go-chi/chi/v5"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type ClassHandler struct {

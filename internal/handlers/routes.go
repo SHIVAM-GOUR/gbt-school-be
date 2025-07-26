@@ -1,12 +1,16 @@
 package handlers
 
 import (
+	"encoding/json"
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 func SetupRoutes(r *chi.Mux, db *gorm.DB) {
 	classHandler := &ClassHandler{DB: db}
+	inquiryHandler := &InquiryHandler{DB: db}
 	// subjectHandler := &SubjectHandler{DB: db}
 	// teacherHandler := &TeacherHandler{DB: db}
 	// studentHandler := &StudentHandler{DB: db}
@@ -14,6 +18,8 @@ func SetupRoutes(r *chi.Mux, db *gorm.DB) {
 	// homeworkHandler := &HomeworkHandler{DB: db}
 
 	r.Route("/api", func(r chi.Router) {
+		r.Get("/test", testAPIHandler)
+
 		r.Route("/class", func(r chi.Router) {
 			r.Post("/", classHandler.Create)
 			r.Get("/{id}", classHandler.Get)
@@ -21,6 +27,11 @@ func SetupRoutes(r *chi.Mux, db *gorm.DB) {
 			r.Delete("/{id}", classHandler.Delete)
 			r.Get("/", classHandler.List)
 		})
+
+		r.Route("/inquiry", func(r chi.Router) {
+			r.Get("/all", inquiryHandler.GetInquiries)
+		})
+
 	})
 }
 
@@ -59,3 +70,8 @@ func SetupRoutes(r *chi.Mux, db *gorm.DB) {
 // 	r.Delete("/{id}", homeworkHandler.Delete)
 // 	r.Get("/", homeworkHandler.List)
 // })
+
+func testAPIHandler(w http.ResponseWriter, r *http.Request) {
+	response := "API IS SUCCESSFULLY RUN"
+	json.NewEncoder(w).Encode(response)
+}
