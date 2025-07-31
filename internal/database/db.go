@@ -2,7 +2,6 @@ package database
 
 import (
 	"log"
-	"os"
 	"time"
 
 	"github.com/SHIVAM-GOUR/gbt-school-be/internal/config"
@@ -14,7 +13,8 @@ import (
 func Connect(cfg *config.Config) (*gorm.DB, error) {
 	logLevel := logger.Info
 
-	dsn := os.Getenv("RAILWAY_DATABASE_URL")
+	// dsn := os.Getenv("RAILWAY_DATABASE_URL")
+	dsn := "postgresql://postgres:fTCNqYhMCcceJvrZJknDNNvxmgRzUXLc@switchyard.proxy.rlwy.net:30216/railway"
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logLevel),
